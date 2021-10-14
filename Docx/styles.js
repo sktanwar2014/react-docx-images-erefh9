@@ -8,32 +8,59 @@ const paragraphStyles = [
     next: 'Normal',
     quickFormat: true,
     run: {
-      size: 44,
+      size: 40,
       bold: true,
     },
+    // paragraph: {
+    //   spacing: {
+    //       after: 120,
+    //   },
+    // },
   },
   {
     id: 'Heading2',
-    name: 'Heading 2',
+    name: 'Heading2',
     basedOn: 'Normal',
     next: 'Normal',
     quickFormat: true,
     run: {
-      size: 24,
+      size: 18,
       bold: true,
-      color: '#aaaaab',
+      color: 'aaaaab',
     },
   },
   {
     id: 'Heading2Value',
-    name: 'Heading 2',
+    name: 'Heading 2 Value',
     basedOn: 'Normal',
     next: 'Normal',
     quickFormat: true,
     run: {
-      size: 24,
-      bold: true,
-      color: '#333333',
+      size: 18,
+      color: '333333',
+    },
+  },
+  {
+    id: 'Heading3',
+    name: 'Heading3',
+    basedOn: 'Normal',
+    next: 'Normal',
+    quickFormat: true,
+    run: {
+      size: 14,
+      // bold: true,
+      // color: 'aaaaab',
+    },
+  },
+  {
+    id: 'Heading3Value',
+    name: 'Heading 3 Value',
+    basedOn: 'Normal',
+    next: 'Normal',
+    quickFormat: true,
+    run: {
+      size: 12,
+      color: '333333',
     },
   },
   {

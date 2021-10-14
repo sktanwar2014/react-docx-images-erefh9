@@ -16,8 +16,15 @@ import {
 import imageBase64Data from './imageBase64Data.js';
 import { paragraphStyles } from './styles.js';
 
-const paraFont = ({ name = 'Calibri (Body)' }) => ({
+const paraFont = ({ name = 'Arial' }) => ({
   name: name,
+});
+
+const emptyLine = new Paragraph({
+  text: '',
+  spacing: {
+    before: 300,
+  },
 });
 
 const BasicTable = ({ rows = [], tableAlignment = null, borders = null }) => {
@@ -51,7 +58,7 @@ const BasicTable = ({ rows = [], tableAlignment = null, borders = null }) => {
                     children: [
                       new TextRun({
                         text: text,
-                        font: font,
+                        font: font,                        
                       }),
                     ],
                     alignment: textAlignment,
@@ -117,13 +124,13 @@ const InvoiceHeading = new Table({
                   cell: [
                     {
                       text: 'Invoice',
-                      width: 50,
+                      width: 60,
                       textStyle: 'Heading2',
                       textAlignment: 'right',
                     },
                     {
                       text: '0011225',
-                      width: 50,
+                      width: 40,
                       textStyle: 'Heading2Value',
                       textAlignment: 'right',
                     },
@@ -133,13 +140,13 @@ const InvoiceHeading = new Table({
                   cell: [
                     {
                       text: 'Date Issued',
-                      width: 50,
+                      width: 60,
                       textStyle: 'Heading2',
                       textAlignment: 'right',
                     },
                     {
                       text: '09, 2021',
-                      width: 50,
+                      width: 40,
                       textStyle: 'Heading2Value',
                       textAlignment: 'right',
                     },
@@ -149,13 +156,13 @@ const InvoiceHeading = new Table({
                   cell: [
                     {
                       text: 'Registration #',
-                      width: 50,
+                      width: 60,
                       textStyle: 'Heading2',
                       textAlignment: 'right',
                     },
                     {
                       text: '787878',
-                      width: 50,
+                      width: 40,
                       textStyle: 'Heading2Value',
                       textAlignment: 'right',
                     },
@@ -172,6 +179,87 @@ const InvoiceHeading = new Table({
   ],
 });
 
+const footerNote = new Paragraph({
+    children: [
+        new TextRun({
+            text: "Note:   ",
+            bold: true,
+        }),        
+        new TextRun({
+            text: "Please Read this note, Please Read this note, Please Read this note, Please Read this note, Please Read this note, Please Read this note, Please Read this note, Please Read this note, Please Read this note, Please Read this note, Please Read this note.",
+            underline: {},
+        }),
+    ],
+    heading: 'Heading3',
+  }),
+
+
+const mailingAddress = BasicTable({
+  rows: [
+    {
+      height: 400,
+      cell: [
+        {
+          text: 'To',
+          width: 50,
+          textStyle: 'Heading2',
+        },
+        {
+          text: 'From',
+          width: 50,
+          textStyle: 'Heading2',
+        },
+      ],
+    },
+    {
+      cell: [
+        {
+          text: '0011225\n0011225\n0011225',
+          rowSpan: 4,
+          width: 50,
+          textStyle: 'Heading2Value',
+        },
+        {
+          text: '0011225',
+          rowSpan: 4,
+          width: 50,
+          textStyle: 'Heading2Value',
+        },
+      ],
+    },
+    {
+      cell: [
+        {
+          text: '0011225\n0011225\n0011225',
+          width: 50,
+          textStyle: 'Heading2Value',
+        },
+        {
+          text: '0011225',
+          width: 50,
+          textStyle: 'Heading2Value',
+        },
+      ],
+    },
+    {
+      cell: [
+        {
+          text: '0011225\n0011225\n0011225',
+          width: 50,
+          textStyle: 'Heading2Value',
+        },
+        {
+          text: '0011225',
+          width: 50,
+          textStyle: 'Heading2Value',
+        },
+      ],
+    },
+  ],
+  tableAlignment: AlignmentType.RIGHT,
+  borders: 0,
+});
+
 const doc = new Document({
   styles: {
     paragraphStyles: paragraphStyles,
@@ -181,56 +269,15 @@ const doc = new Document({
       properties: {
         page: {
           margin: {
-            top: 400,
-            bottom: 400,
-            left: 400,
-            right: 400,
+            top: 600,
+            bottom: 600,
+            left: 600,
+            right: 600,
           },
         },
       },
       children: [
-        InvoiceHeading,
-        new Paragraph({
-          text: '',
-          spacing: {
-            before: 200,
-          },
-        }),
-        BasicTable({
-          rows: [
-            {
-              height: 400,
-              cell: [
-                {
-                  text: 'To',
-                  width: 50,
-                  textStyle: 'Heading2',
-                },
-                {
-                  text: 'From',
-                  width: 50,
-                  textStyle: 'Heading2',
-                },
-              ],
-            },
-            {
-              cell: [
-                {
-                  text: '0011225\n0011225\n0011225',
-                  width: 50,
-                  textStyle: 'Heading2Value',
-                },
-                {
-                  text: '0011225',
-                  width: 50,
-                  textStyle: 'Heading2Value',
-                },
-              ],
-            },
-          ],
-          tableAlignment: AlignmentType.RIGHT,
-          borders: 0,
-        }),
+        InvoiceHeading, emptyLine, mailingAddress, emptyLine, footerNote
       ],
     },
   ],
