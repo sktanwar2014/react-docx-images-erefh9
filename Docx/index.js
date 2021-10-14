@@ -16,25 +16,34 @@ import {
 import imageBase64Data from './imageBase64Data.js';
 import { paragraphStyles } from './styles.js';
 
-const font = ({ name = 'Calibri (Body)' }) => ({
+const paraFont = ({ name = 'Calibri (Body)' }) => ({
   name: name,
 });
 
-const BasicTable = ({ rows, tableAlignment = null, borders = 0 }) => {
+const BasicTable = ({ rows = [], tableAlignment = null, borders = null }) => {
   return new Table({
-    ...(tableAlignment !== null && { alignment: AlignmentType.Right }),
-    borders: borders,
+    ...(tableAlignment !== null && { alignment: tableAlignment }),
+    ...(borders !== null && { borders: borders }),
     rows: (rows || []).map(
-      ({ height, cell }, rowIndex) =>
+      ({ height = 0, cell = [] }, rowIndex) =>
         new TableRow({
           ...(height > 0 && { height: { value: height } }),
           children: (cell || []).map(
             (
-              { colSpan, text, width, textStyle, font, textAlignment },
+              {
+                text = '',
+                colSpan = 0,
+                rowSpan = 0,
+                width = 100,
+                textStyle = 'Normal',
+                font = paraFont({}),
+                textAlignment = 'left',
+              },
               cellIndex
             ) => {
               return new TableCell({
                 ...(colSpan > 0 && { columnSpan: colSpan }),
+                ...(colSpan > 0 && { rowSpan: rowSpan }),
                 width: { size: width, type: WidthType.PERCENTAGE },
 
                 children: [
@@ -45,7 +54,7 @@ const BasicTable = ({ rows, tableAlignment = null, borders = 0 }) => {
                         font: font,
                       }),
                     ],
-                    alignment: textAlignment || 'left',
+                    alignment: textAlignment,
                     heading: textStyle,
                   }),
                 ],
@@ -87,90 +96,67 @@ const InvoiceHeading = new Table({
             BasicTable({
               rows: [
                 {
-                  height: 0,
                   cell: [
                     {
                       text: 'Tax Invoice',
                       colSpan: 2,
-                      width: 100,
                       textStyle: 'Heading1',
-                      font: font({}),
                       textAlignment: 'right',
                     },
                   ],
                 },
                 {
-                  height: 0,
                   cell: [
                     {
-                      text: '',
                       colSpan: 2,
-                      width: 100,
-                      textStyle: 'Heading2',
-                      font: font({}),
                       textAlignment: 'right',
                     },
                   ],
                 },
                 {
-                  height: 0,
                   cell: [
                     {
                       text: 'Invoice',
-                      colSpan: 0,
                       width: 50,
                       textStyle: 'Heading2',
-                      font: font({}),
                       textAlignment: 'right',
                     },
                     {
                       text: '0011225',
-                      colSpan: 0,
                       width: 50,
                       textStyle: 'Heading2Value',
-                      font: font({}),
                       textAlignment: 'right',
                     },
                   ],
                 },
                 {
-                  height: 0,
                   cell: [
                     {
                       text: 'Date Issued',
-                      colSpan: 0,
                       width: 50,
                       textStyle: 'Heading2',
-                      font: font({}),
                       textAlignment: 'right',
                     },
                     {
                       text: '09, 2021',
-                      colSpan: 0,
                       width: 50,
                       textStyle: 'Heading2Value',
-                      font: font({}),
                       textAlignment: 'right',
                     },
                   ],
                 },
                 {
-                  height: 0,
                   cell: [
                     {
                       text: 'Registration #',
-                      colSpan: 0,
                       width: 50,
                       textStyle: 'Heading2',
-                      font: font({}),
                       textAlignment: 'right',
                     },
                     {
                       text: '787878',
-                      colSpan: 0,
                       width: 50,
                       textStyle: 'Heading2Value',
-                      font: font({}),
                       textAlignment: 'right',
                     },
                   ],
@@ -217,40 +203,27 @@ const doc = new Document({
               cell: [
                 {
                   text: 'To',
-                  colSpan: 0,
                   width: 50,
                   textStyle: 'Heading2',
-                  font: font({}),
-                  textAlignment: 'left',
                 },
                 {
                   text: 'From',
-                  colSpan: 0,
                   width: 50,
                   textStyle: 'Heading2',
-                  font: font({}),
-                  textAlignment: 'left',
                 },
               ],
             },
             {
-              height: 0,
               cell: [
                 {
                   text: '0011225\n0011225\n0011225',
-                  colSpan: 0,
                   width: 50,
                   textStyle: 'Heading2Value',
-                  font: font({}),
-                  textAlignment: 'left',
                 },
                 {
                   text: '0011225',
-                  colSpan: 0,
                   width: 50,
                   textStyle: 'Heading2Value',
-                  font: font({}),
-                  textAlignment: 'left',
                 },
               ],
             },
